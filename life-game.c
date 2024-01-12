@@ -64,8 +64,8 @@ bool to_be_born(int x, int y) {
 
 // 生きているセルに隣接する生きたセルが2つか3つならば，次の世代でも生存
 bool to_be_alive(int x, int y) {
-    int count = count_alive_neighbors(x, y);
-    return count == 2 || count == 3;
+    int alive = count_alive_neighbors(x, y);
+    return alive == 2 || alive == 3;
 }
 
 // 生きているセルに隣接する生きたセルが1つ以下ならば，過疎により死滅
