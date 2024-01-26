@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conway's Game of Life</title>
+    <style>
+        /* スタイルはセルの大きさや見た目を設定するためのものです。 */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(32, 20px);
+            /* セルの大きさが32x32 */
+            gap: 1px;
+        }
+
+        .cell {
+            width: 20px;
+            height: 20px;
+            border: 1px solid #ccc;
+            background-color: white;
+        }
+
+        /* ボタンのスタイル */
+        button {
+            margin-top: 10px;
+            padding: 10px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="grid-container" id="grid-container"></div>
+
+    <button onclick="startSimulation()">Start Simulation</button>
+    <button onclick="resetSimulation()">Reset Simulation</button>
+
+    <script>
+        // ライフゲームの初期状態を設定する関数
+        function initializeGrid() {
+            const gridContainer = document.getElementById('grid-container');
+
+            for (let i = 0; i < 32; i++) {
+                for (let j = 0; j < 32; j++) {
+                    const cell = document.createElement('div');
+                    cell.classList.add('cell');
+                    cell.addEventListener('click', toggleCell);
+                    gridContainer.appendChild(cell);
+                }
+            }
+        }
+
+        // セルの状態をトグルする関数
+        function toggleCell(event) {
+            const cell = event.target;
+            cell.style.backgroundColor = cell.style.backgroundColor === 'red' ? 'white' : 'red';
+        }
+
+        // シミュレーションを開始する関数
+        function startSimulation() {
+            // ここにシミュレーションのロジックを追加する
+            console.log('Simulation started');
+        }
+
+        // シミュレーションをリセットする関数
+        function resetSimulation() {
+            const cells = document.querySelectorAll('.cell');
+            cells.forEach(cell => {
+                cell.style.backgroundColor = 'white';
+            });
+
+            // ここにシミュレーションのリセットロジックを追加する
+            console.log('Simulation reset');
+        }
+
+        // 初期化関数を呼び出す
+        initializeGrid();
+    </script>
+
+</body>
+
+</html>
