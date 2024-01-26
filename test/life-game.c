@@ -106,15 +106,22 @@ void update_matrix() {
 
 int main() {
     // 初期状態
-    matrix[15][15] = true;
-    matrix[16][15] = true;
-    matrix[17][15] = true;
-    matrix[15][16] = true;
-    matrix[16][17] = true;
+    matrix[13][13] = true;
+    matrix[13][14] = true;
+    matrix[13][15] = true;
+    matrix[13][17] = true;
+
+    matrix[14][13] = true;
+
+    matrix[15][16] = matrix[15][17] = true;
+
+    matrix[16][14] = matrix[16][15] = matrix[16][17] = true;
+
+    matrix[17][13] = matrix[17][15] = matrix[17][17] = true;
 
     usleep(1000000);
 
-    for (int i = 0; i < 100; i++) {
+    while (true) {
         display_matrix();
         usleep(10000);
         update_matrix();
