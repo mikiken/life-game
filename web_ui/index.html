@@ -61,7 +61,7 @@
         function encodeMatrix() {
             const cells = document.querySelectorAll('.cell');
             let bitString = '';
-            let hexString = '0x';
+            let hexString = '';
 
             cells.forEach(cell => {
                 const isAlive = cell.style.backgroundColor === 'red';
