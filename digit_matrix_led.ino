@@ -21,7 +21,6 @@ void init_pin() {
     pinMode(latch, OUTPUT);
     pinMode(enable, OUTPUT);
     digitalWrite(enable, LOW);
-    digitalWrite(latch, HIGH);
 }
 
 void convert_matrix_to_pattern(bool matrix[32][32]) {
@@ -49,6 +48,7 @@ void display(bool matrix[32][32]) {
             digitalWrite(clock, HIGH);
             digitalWrite(clock, LOW);
         }
-        delayMicroseconds(800);
+        digitalWrite(latch, HIGH);
+        digitalWrite(latch, LOW);
     }
 }
