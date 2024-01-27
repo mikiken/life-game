@@ -28,7 +28,6 @@
             background-color: white;
         }
 
-        /* ボタンのスタイル */
         .buttons {
             margin-top: 20px;
         }
@@ -65,9 +64,28 @@
             cell.style.backgroundColor = cell.style.backgroundColor === 'red' ? 'white' : 'red';
         }
 
+        // セルの状態を表すhex列を生成する関数
+        function encodeGrid() {
+            const cells = document.querySelectorAll('.cell');
+            let bitString = '';
+            let hexString = '0x';
+
+            cells.forEach(cell => {
+                const isAlive = cell.style.backgroundColor === 'red';
+                bitString += isAlive ? '1' : '0';
+            });
+            while (bitString.length > 0) {
+                const hex = parseInt(bitString.substring(0, 4), 2).toString(16);
+                bitString = bitString.substring(4);
+                hexString += hex;
+            }
+            console.log('Encoded Grid Hex:', hexString);
+        }
+
         // シミュレーションを開始する関数
         function startSimulation() {
-            // ここにシミュレーションのロジックを追加する
+            encodeGrid();
+            // TODO: ここに送信する処理を書く
             console.log('Simulation started');
         }
 
@@ -78,7 +96,7 @@
                 cell.style.backgroundColor = 'white';
             });
 
-            // ここにシミュレーションのリセットロジックを追加する
+            // TODO: ここにリセットの処理を書く
             console.log('Simulation reset');
         }
 
