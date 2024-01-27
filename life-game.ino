@@ -90,31 +90,20 @@ void update_matrix() {
             matrix[x][y] = next_matrix[x][y];
 }
 
-void init_matrix() {
-    // 初期状態
-    matrix[13][13] = true;
-    matrix[13][14] = true;
-    matrix[13][15] = true;
-    matrix[13][17] = true;
-
-    matrix[14][13] = true;
-
-    matrix[15][16] = matrix[15][17] = true;
-
-    matrix[16][14] = matrix[16][15] = matrix[16][17] = true;
-
-    matrix[17][13] = matrix[17][15] = matrix[17][17] = true;
+void set_matrix_initial_state(String hexString) {
+    for (int i = 0; i < 256; i++) {
+        char hex = hexString[i];
+        int n = hex - '0';
+        if (n > 9)
+            n = hex - 'a' + 10;
+        for (int j = 0; j < 4; j++) {
+            matrix[(i * 4 + j) / WIDTH][(i * 4 + j) % WIDTH] = (n >> (3 - j)) & 0b0001;
+        }
+    }
 }
 
-void setup() {
-    init_pin();
-    init_matrix();
-    delay(5000);
-}
-
-void loop() {
-    unsigned display_start = millis();
-    while (millis() - display_start < 120)
-        display(matrix);
-    update_matrix();
+void reset_matrix_state() {
+    for (int y = 0; y < HEIGHT; y++)
+        for (int x = 0; x < WIDTH; x++)
+            matrix[x][y] = false;
 }
