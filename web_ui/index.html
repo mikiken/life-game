@@ -35,19 +35,14 @@
 </head>
 
 <body>
-
     <div class="grid-container" id="grid-container"></div>
-
     <div class="buttons">
         <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" onclick="startSimulation()">Start Simulation</button>
         <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" onclick="resetSimulation()">Reset Simulation</button>
     </div>
-
     <script>
-        // ライフゲームの初期状態を設定する関数
-        function initializeGrid() {
+        function initMatrix() {
             const gridContainer = document.getElementById('grid-container');
-
             for (let i = 0; i < 32; i++) {
                 for (let j = 0; j < 32; j++) {
                     const cell = document.createElement('div');
@@ -58,14 +53,12 @@
             }
         }
 
-        // セルの状態をトグルする関数
         function toggleCell(event) {
             const cell = event.target;
             cell.style.backgroundColor = cell.style.backgroundColor === 'red' ? 'white' : 'red';
         }
 
-        // セルの状態を表すhex列を生成する関数
-        function encodeGrid() {
+        function encodeMatrix() {
             const cells = document.querySelectorAll('.cell');
             let bitString = '';
             let hexString = '0x';
@@ -80,28 +73,59 @@
                 hexString += hex;
             }
             console.log('Encoded Grid Hex:', hexString);
+            return hexString;
         }
 
-        // シミュレーションを開始する関数
+        function postMatrixState(hexString) {
+            fetch('/send/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ gridState: hexString }),
+            })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Server Response:', data);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+
+        function resetMatrixState() {
+            fetch('/reset/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: 'Client request to reset.',
+            })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Server Response:', data);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+
         function startSimulation() {
-            encodeGrid();
-            // TODO: ここに送信する処理を書く
+            const hexString = encodeMatrix();
+            postMatrixState(hexString);
             console.log('Simulation started');
         }
 
-        // シミュレーションをリセットする関数
         function resetSimulation() {
             const cells = document.querySelectorAll('.cell');
             cells.forEach(cell => {
                 cell.style.backgroundColor = 'white';
             });
-
-            // TODO: ここにリセットの処理を書く
+            resetMatrixState();
             console.log('Simulation reset');
         }
 
-        // 初期化関数を呼び出す
-        initializeGrid();
+        initMatrix();
     </script>
 
 </body>
