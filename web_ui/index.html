@@ -4,14 +4,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
     <title>Conway's Game of Life</title>
     <style>
-        /* スタイルはセルの大きさや見た目を設定するためのものです。 */
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
         .grid-container {
             display: grid;
             grid-template-columns: repeat(32, 20px);
-            /* セルの大きさが32x32 */
-            gap: 1px;
         }
 
         .cell {
@@ -22,10 +29,8 @@
         }
 
         /* ボタンのスタイル */
-        button {
-            margin-top: 10px;
-            padding: 10px;
-            font-size: 16px;
+        .buttons {
+            margin-top: 20px;
         }
     </style>
 </head>
@@ -34,8 +39,10 @@
 
     <div class="grid-container" id="grid-container"></div>
 
-    <button onclick="startSimulation()">Start Simulation</button>
-    <button onclick="resetSimulation()">Reset Simulation</button>
+    <div class="buttons">
+        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" onclick="startSimulation()">Start Simulation</button>
+        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" onclick="resetSimulation()">Reset Simulation</button>
+    </div>
 
     <script>
         // ライフゲームの初期状態を設定する関数
