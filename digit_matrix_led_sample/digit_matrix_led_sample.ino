@@ -4,7 +4,7 @@
 #define down_sin_1 12
 #define down_sin_2 13
 #define down_sin_3 14
-#define clock 5
+#define led_clock 5
 #define latch 6
 #define enable 7
 
@@ -49,14 +49,26 @@ void setup() {
     pinMode(down_sin_1, OUTPUT);
     pinMode(down_sin_2, OUTPUT);
     pinMode(down_sin_3, OUTPUT);
-    pinMode(clock, OUTPUT);
+    pinMode(led_clock, OUTPUT);
     pinMode(latch, OUTPUT);
     pinMode(enable, OUTPUT);
+
+    digitalWrite(up_sin_1, LOW);
+    digitalWrite(up_sin_2, LOW);
+    digitalWrite(up_sin_3, LOW);
+    digitalWrite(down_sin_1, LOW);
+    digitalWrite(down_sin_2, LOW);
+    digitalWrite(down_sin_3, LOW);
+    for (int i = 0; i < 16; i++) {
+        digitalWrite(led_clock, HIGH);
+        digitalWrite(led_clock, LOW);
+    }
+    digitalWrite(latch, HIGH);
+    digitalWrite(latch, LOW);
+    digitalWrite(enable, LOW);
 }
 
 void loop() {
-    digitalWrite(enable, LOW);
-    digitalWrite(latch, HIGH);
     for (int row = 0; row < 16; row++) {
         for (int n = 0; n < 16; n++) {
             // up
@@ -67,17 +79,11 @@ void loop() {
             digitalWrite(down_sin_1, ((0b0000000000000001 << row) >> n) & 0b0000000000000001 ? HIGH : LOW);
             digitalWrite(down_sin_2, (pattern[row + 16] >> (n + 16)) & 0b0000000000000001 ? HIGH : LOW);
             digitalWrite(down_sin_3, (pattern[row + 16] >> n) & 0b0000000000000001 ? HIGH : LOW);
-
-            digitalWrite(clock, HIGH);
-            digitalWrite(clock, LOW);
+            // clock
+            digitalWrite(led_clock, HIGH);
+            digitalWrite(led_clock, LOW);
         }
-        delayMicroseconds(800);
+        digitalWrite(latch, HIGH);
+        digitalWrite(latch, LOW);
     }
-    digitalWrite(up_sin_1, LOW);
-    digitalWrite(up_sin_2, LOW);
-    digitalWrite(up_sin_3, LOW);
-    digitalWrite(down_sin_1, LOW);
-    digitalWrite(down_sin_2, LOW);
-    digitalWrite(down_sin_3, LOW);
-    digitalWrite(latch, LOW);
 }
