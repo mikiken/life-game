@@ -1,4 +1,4 @@
-extern bool enableSimulation = false;
+bool enableSimulation = false;
 
 void startSimulation(String hexString) {
     init_pin();
