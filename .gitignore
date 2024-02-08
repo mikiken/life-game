@@ -2,3 +2,5 @@
 .vscode
 *.exe
 secrets.h
+report/*
+!report/report.tex
