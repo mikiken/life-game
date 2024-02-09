@@ -1,7 +1,17 @@
 \documentclass{jlreq}
 \usepackage{url,graphicx,hyperref}
 
-\title{電気電子工学実験3 テーマE(b) \\ ライフゲームの製作}
+% 余白の設定
+\oddsidemargin  -5.4mm
+\evensidemargin -5.4mm
+\textwidth      170mm
+\textheight     255mm
+\topmargin      -25.4mm
+\headheight     20mm
+\headsep        0mm
+\footskip       10mm
+
+\title{電気電子工学実験Ⅲ テーマE(b) \\ ライフゲームの製作}
 \author{三木 健太郎}
 \date{2024年2月12日}
 
@@ -9,7 +19,7 @@
 \maketitle
 
 \section{制作物の概要}
-本実験の自由製作では、ライフゲームのシミュレーションの様子を32×32のマトリクスLED上に表示するデバイスを製作した。また、シミュレーションの初期状態の設定、シミュレーションの開始、リセットを行える操作画面も別途実装した。この操作画面は、マイコン(Raspberry Pi Pico W)と同じネットワークに接続しているコンピュータのWebブラウザからアクセスすることができる。
+本実験の自由製作では、ライフゲームのシミュレーションの様子を32×32のマトリクスLED上に表示するデバイスを製作した。また、シミュレーションの初期状態の設定、シミュレーションの開始、リセットを行える操作画面も別途実装した。この操作画面は、マイコン(Raspberry Pi Pico W)と同じネットワークに接続しているコンピュータのWebブラウザからアクセスすることができる。\\
 
 \begin{figure}[h]
     \begin{center}
@@ -50,7 +60,7 @@ Raspberry Pi Pico W は、RP2040を搭載したマイコンボードであり、
 \subsection{実装方法}
 まず、ハードウェアの実装について述べる。先述のマトリクスLEDモジュールは、制御用のICや周辺回路を含め、1つの基板上に実装されていた。今回は2つのマトリクスLEDを縦に並べて利用するために、マトリクスLEDを元々実装されていた基板から切り離し、ユニバーサル基板上に並べて使用した。
 
-次にソフトウェアの実装について述べる。ソースコードは、ライフゲームのシミュレーションを行う\verb|life-game.ino|、マトリクスLEDの制御を行うプログラム\verb|digit_matrix_led.ino|、操作画面用のWebサーバを立ち上げる\verb|http_server.ino|、これらのプログラムをまとめる\verb|main.ino|の4つのファイルから構成されている。マトリクスLEDに任意のパターンを表示させるためには、表示させたいパターンを1行ずつ高速に切り替えるダイナミック点灯と呼ばれる方法を用いる必要があった。そこで、\verb|digit_matrix_led.ino|に、その制御を行うプログラムを実装した。また、\verb|http_server.ino|では、Raspberry Pi Pico WをHTTPサーバとして動作させ、Webブラウザからリクエストを受け取ると、ライフゲームのシミュレーションの開始、リセットを行うようになっている。なお、実装したプログラムはGitHub(\url{https://github.com/mikiken/life-game/})で公開している。
+次にソフトウェアの実装について述べる。ソースコードは、ライフゲームのシミュレーションを行う\verb|life-game.ino|、マトリクスLEDの制御を行うプログラム\verb|digit_matrix_led.ino|、操作画面用のWebサーバを立ち上げる\verb|http_server.ino|、これらのプログラムをまとめる\verb|main.ino|の4つのファイルから構成されている。マトリクスLEDに任意のパターンを表示させるためには、表示させたいパターンを1行ずつ高速に切り替えるダイナミック点灯と呼ばれる方法を用いる必要があった。そこで、\verb|digit_matrix_led.ino|に、その制御を行うプログラムを実装した。また、\verb|http_server.ino|では、Raspberry Pi Pico WをHTTPサーバとして動作させ、Webブラウザからリクエストを受け取ると、ライフゲームのシミュレーションの開始、リセットを行うようになっている。なお、実装したプログラムはGitHub(\url{https://github.com/mikiken/life-game/})で公開している。\\
 
 \begin{figure}[h]
     \begin{center}
