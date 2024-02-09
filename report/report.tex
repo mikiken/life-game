@@ -37,7 +37,7 @@
     \label{img:lifegame}
 \end{figure}
 
-\section{実装の詳細}
+\section{実装の概要}
 \subsection{材料}
 \begin{itemize}
     \item 32×16マトリクスLEDモジュール\footnote{\url{https://eleshop.jp/shop/g/gK4U419/}} 2個
@@ -50,14 +50,17 @@ Raspberry Pi Pico W は、RP2040を搭載したマイコンボードであり、
 \subsection{実装方法}
 まず、ハードウェアの実装について述べる。先述のマトリクスLEDモジュールは、制御用のICや周辺回路を含め、1つの基板上に実装されていた。今回は2つのマトリクスLEDを縦に並べて利用するために、マトリクスLEDを元々実装されていた基板から切り離し、ユニバーサル基板上に並べて使用した。
 
-次にソフトウェアの実装について述べる。ソースコードは、ライフゲームのシミュレーションを行う\verb|life-game.ino|、マトリクスLEDの制御を行うプログラム\verb|digit_matrix_led.ino|、操作画面用のWebサーバを立ち上げる\verb|http_server.ino|、これらのプログラムをまとめる\verb|main.ino|の4つのファイルから構成されている。\verb|Raspberry Pi Pico W|をHTTPサーバとして動作させ、Webブラウザからリクエストを受け取ると、ライフゲームのシミュレーションの開始、リセットを行うようになっている。なお、実装したプログラムはGitHub(\url{https://github.com/mikiken/life-game/})で公開している。
+次にソフトウェアの実装について述べる。ソースコードは、ライフゲームのシミュレーションを行う\verb|life-game.ino|、マトリクスLEDの制御を行うプログラム\verb|digit_matrix_led.ino|、操作画面用のWebサーバを立ち上げる\verb|http_server.ino|、これらのプログラムをまとめる\verb|main.ino|の4つのファイルから構成されている。マトリクスLEDに任意のパターンを表示させるためには、表示させたいパターンを1行ずつ高速に切り替えるダイナミック点灯と呼ばれる方法を用いる必要があった。そこで、\verb|digit_matrix_led.ino|に、その制御を行うプログラムを実装した。また、\verb|http_server.ino|では、Raspberry Pi Pico WをHTTPサーバとして動作させ、Webブラウザからリクエストを受け取ると、ライフゲームのシミュレーションの開始、リセットを行うようになっている。なお、実装したプログラムはGitHub(\url{https://github.com/mikiken/life-game/})で公開している。
 
 \begin{figure}[h]
     \begin{center}
-        \includegraphics[width=120mm]{img/structure.png}
+        \includegraphics[width=130mm]{img/structure.png}
     \end{center}
     \caption{全体の構成図}
     \label{img:structure}
 \end{figure}
+
+\section{感想}
+今回の製作を通し、身近に利用されているマトリクスLEDの制御について学ぶことができた。今回は、一般的なライフゲームのルールに基づいてシミュレーションを行うプログラムを作成したが、今後は生存・死滅のルールを変更するとどのようにシミュレーションの様子が変化するかを考察したい。
 
 \end{document}
